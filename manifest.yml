@@ -1,7 +1,16 @@
 ---
 applications:
 - name: pcfdemo
-  memory: 512M 
+  memory: 1G
   instances: 1
-  host: pcfdemo-yourname
+  host: kwdemo
+  buildpack: java_buildpack
+#  path: ./build/pcfdemo.war
   path: ./target/pcfdemo.war
+  env:
+    SPRING_PROFILES_ACTIVE: test
+    SPRING_CLOUD_CONFIG_NAME: pcfdemo
+    SPRING_CLOUD_CONFIG_LABEL: master
+  services:
+    - mybunny
+    - config-service-pcfdemo

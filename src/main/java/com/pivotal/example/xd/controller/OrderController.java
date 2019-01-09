@@ -9,6 +9,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import javax.annotation.PreDestroy;
 import javax.servlet.ServletContext;
 
+import com.pivotal.example.xd.*;
+import com.pivotal.example.xd.configsvc.MyPropeties;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pivotal.example.xd.HeatMap;
-import com.pivotal.example.xd.Order;
-import com.pivotal.example.xd.OrderGenerator;
-import com.pivotal.example.xd.RabbitClient;
-
 /**
  * Handles requests for the application home page.
  */
@@ -31,7 +28,10 @@ public class OrderController {
 	
 	@Autowired
 	ServletContext context;
-	
+
+	@Autowired
+	private MyPropeties myProperties;
+
 	private static Map<String,Queue<Order>> stateOrdersMap = new HashMap<String, Queue<Order>>();
 	private static RabbitClient client ;
 
@@ -93,7 +93,9 @@ public class OrderController {
 			Map vcapMap = mapper.readValue(System.getenv("VCAP_APPLICATION"), Map.class);
 			model.addAttribute("vcap_app", vcapMap);
 		}
-		
+
+		model.addAttribute("configValName", myProperties.getName());
+
         return "WEB-INF/views/pcfdemo.jsp";
     }
 
