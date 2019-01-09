@@ -1,0 +1,10 @@
+---
+applications:
+- name: pcfdemo-v2
+  memory: 1G
+  instances: 1
+  host: kwdemo-g
+  buildpack: java_buildpack
+  path: ./build/pcfdemo-v2.war
+  services:
+    - mybunny
