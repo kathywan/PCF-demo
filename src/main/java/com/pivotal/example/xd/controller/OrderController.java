@@ -96,7 +96,7 @@ public class OrderController {
 
 		model.addAttribute("configValName", myProperties.getName());
 
-        return "WEB-INF/views/pcfdemo.jsp";
+		return "WEB-INF/views/pcfdemo.jsp";
     }
 
     @RequestMapping(value="/getData")

@@ -1,4 +1,4 @@
-package com.pivotal.example.xd.configsvc;
+package com.pivotal.example.xd.refresh;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

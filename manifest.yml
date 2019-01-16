@@ -4,13 +4,14 @@ applications:
   memory: 1G
   instances: 1
   host: kwdemo
-  buildpack: java_buildpack
+  buildpack: java_buildpack_offline
 #  path: ./build/pcfdemo.war
   path: ./target/pcfdemo.war
   env:
     SPRING_PROFILES_ACTIVE: test
     SPRING_CLOUD_CONFIG_NAME: pcfdemo
-    SPRING_CLOUD_CONFIG_LABEL: master
+#    TRUST_CERTS: api.sys.pcf.nycnet
+#    SPRING_CLOUD_CONFIG_LABEL: master
   services:
-    - mybunny
-    - config-service-pcfdemo
+#    - mybunny
+    - config-server

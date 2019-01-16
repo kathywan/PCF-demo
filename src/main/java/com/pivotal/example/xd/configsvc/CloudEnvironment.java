@@ -2,6 +2,7 @@ package com.pivotal.example.xd.configsvc;
 
 import io.pivotal.spring.cloud.service.common.ConfigServerServiceInfo;
 import io.pivotal.spring.cloud.service.config.ConfigClientOAuth2ResourceDetails;
+import io.pivotal.springcloud.ssl.CloudFoundryCertificateTruster;
 import org.springframework.cloud.Cloud;
 import org.springframework.cloud.CloudFactory;
 import org.springframework.cloud.config.client.ConfigClientProperties;
@@ -20,6 +21,7 @@ public class CloudEnvironment extends StandardServletEnvironment {
     @Override
     public void initPropertySources(ServletContext servletContext, ServletConfig servletConfig) {
         super.initPropertySources(servletContext,servletConfig);
+        System.out.println("############### initPropertySources - before getting customizePropertySources: " + this.getPropertySources().size());
         customizePropertySources(this.getPropertySources());
     }
 
@@ -27,7 +29,11 @@ public class CloudEnvironment extends StandardServletEnvironment {
     protected void customizePropertySources(MutablePropertySources propertySources) {
         super.customizePropertySources(propertySources);
         try {
+            System.out.println("############### num of propertyResources initialized before getting config service: " + propertySources.size());
+
             PropertySource<?> source = initConfigServicePropertySourceLocator(this);
+            System.out.println("##################### config service properties: " + source.toString());
+
             propertySources.addLast(source);
 
         } catch (Exception ex) {
@@ -52,6 +58,8 @@ public class CloudEnvironment extends StandardServletEnvironment {
 
         ConfigServicePropertySourceLocator configServicePropertySourceLocator =
                 new ConfigServicePropertySourceLocator(configClientProperties);
+
+        CloudFoundryCertificateTruster.trustCertificates();
 
         OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(configClientOAuth2ResourceDetails(configServiceInfo));
         configServicePropertySourceLocator.setRestTemplate(oAuth2RestTemplate);
