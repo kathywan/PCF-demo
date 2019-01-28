@@ -15,8 +15,11 @@ import org.springframework.web.context.support.StandardServletEnvironment;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
+import java.util.Arrays;
 
 public class CloudEnvironment extends StandardServletEnvironment {
+
+    private static String ACTIVE_PROFILE_LOCAL = "local";
 
     @Override
     public void initPropertySources(ServletContext servletContext, ServletConfig servletConfig) {
@@ -28,16 +31,23 @@ public class CloudEnvironment extends StandardServletEnvironment {
     @Override
     protected void customizePropertySources(MutablePropertySources propertySources) {
         super.customizePropertySources(propertySources);
-        try {
-            System.out.println("############### num of propertyResources initialized before getting config service: " + propertySources.size());
+        String [] profiles =  getActiveProfiles();
+        System.out.println("##################### current first active spring profile: " + profiles[0]);
 
-            PropertySource<?> source = initConfigServicePropertySourceLocator(this);
-            System.out.println("##################### config service properties: " + source.toString());
+        if(!Arrays.stream(profiles).anyMatch(
+                profile -> profile.equalsIgnoreCase(ACTIVE_PROFILE_LOCAL)) ) {
 
-            propertySources.addLast(source);
+            try {
+                System.out.println("############### num of propertyResources initialized before getting config service: " + propertySources.size());
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+                PropertySource<?> source = initConfigServicePropertySourceLocator(this);
+                System.out.println("##################### config service properties: " + source.toString());
+
+                propertySources.addLast(source);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

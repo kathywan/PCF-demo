@@ -2,9 +2,11 @@ package com.pivotal.example.xd.refresh;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.refresh.ContextRefresher;
 import org.springframework.cloud.context.scope.refresh.RefreshScope;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,8 +22,10 @@ public class RefreshController implements ApplicationContextAware {
 
     @RequestMapping(path = "/refreshall", method = RequestMethod.GET)
     public @ResponseBody String refresh() {
-        refreshScope.refreshAll();
-        refreshctx();
+//        refreshScope.refreshAll();
+//        refreshctx();
+        ContextRefresher contextRefresher = new ContextRefresher((ConfigurableApplicationContext)applicationContext, refreshScope);
+        contextRefresher.refresh();
         return "Refreshed";
     }
 

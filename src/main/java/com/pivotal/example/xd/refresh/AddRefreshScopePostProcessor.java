@@ -22,11 +22,11 @@ public class AddRefreshScopePostProcessor implements BeanFactoryPostProcessor, A
         if(beanFactory.getRegisteredScope("refresh") == null)
             beanFactory.registerScope("refresh", refreshScope);
 
-        for (String beanName : applicationContext.getBeanDefinitionNames()) {
+       /* for (String beanName : applicationContext.getBeanDefinitionNames()) {
             BeanDefinition beanDef = beanFactory.getBeanDefinition(beanName);
             beanDef.setLazyInit(true);
             beanDef.setScope("refresh");
-        }
+        }*/
     }
 
     public void setApplicationContext(ApplicationContext context)
