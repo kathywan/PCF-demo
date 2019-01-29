@@ -12,6 +12,10 @@ applications:
     SPRING_CLOUD_CONFIG_NAME: pcfdemo
 #    TRUST_CERTS: api.sys.pcf.nycnet
 #    SPRING_CLOUD_CONFIG_LABEL: master
+    ENCRYPT_KEY_STORE_LOCATION: classpath:/config-server.jks
+    ENCRYPT_KEY_STORE_PASSWORD: doittkey
+    ENCRYPT_KEY_STORE_ALIAS: doittkeystore
+    ENCRYPT_KEY_STORE_SECRET: doittkey
   services:
 #    - mybunny
-    - config-server
+    - doitt-config-server
