@@ -16,7 +16,7 @@ import java.util.Base64;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class EncryptUtil {
-    // The secret for encryption is random (so dictionary attack is not a danger)
+
     private final static String DEFAULT_SALT = "deadbeef";
 
     private String salt;
@@ -28,12 +28,8 @@ public class EncryptUtil {
     }
 
     public static String testEncrypt(String message) throws Exception {
-        //First generate a public/private key pair
         KeyPair pair = getKeyPairFromKeyStore();
-
-        //Encrypt the message
         String cipherText = encrypt(message, pair.getPublic());
-
         System.out.println(cipherText);
         return cipherText;
     }
@@ -58,7 +54,6 @@ public class EncryptUtil {
         return new KeyPair(publicKey, privateKey);
     }
 
-    //get this code from spring-security-rsa RsaSecretEncryptor.java
     public static String encrypt(String plainText, PublicKey publicKey) throws Exception {
 
         byte[] random = KeyGenerators.secureRandom(16).generateKey();
