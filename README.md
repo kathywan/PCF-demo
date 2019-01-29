@@ -17,3 +17,14 @@ Additional fun: click "Kill App" and watch the application crashing.. it will sh
 ## Concourse CI Pipeline
 
 Please take a look at the [ci](ci/README.md) folder to see the [Concourse](http://concourse.ci/) CI Pipeline.
+
+## use this branch to test spring MVC app working with Spring Cloud Config Server
+using spring 4
+
+added load propertySource from config server
+
+Added refresh scope and refresh endpoint
+
+Added client side decryption
+
+Added integration w/ credhub for key management
